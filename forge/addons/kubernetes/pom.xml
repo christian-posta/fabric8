@@ -27,6 +27,10 @@
   <name>Fabric8 :: Forge Addons :: Kubernetes</name>
 
   <properties>
+    <!--  putting this hear as a reminder that when doing forge plugins, we must line up
+    the slf4j.version with the version that's common to the addons. unfortunately there is
+    not good class-loading isolation with the addons/plugins for forge/furnace-->
+    <slf4j.version>1.7.13</slf4j.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
@@ -67,8 +71,23 @@
       <classifier>forge-addon</classifier>
     </dependency>
     <dependency>
+      <groupId>org.jboss.forge.addon</groupId>
+      <artifactId>slf4j</artifactId>
+      <classifier>forge-addon</classifier>
+    </dependency>
+    <dependency>
       <groupId>io.fabric8</groupId>
       <artifactId>kubernetes-api</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>jul-to-slf4j</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
   </dependencies>
 
